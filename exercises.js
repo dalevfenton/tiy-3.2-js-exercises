@@ -2,6 +2,35 @@
   /**
  *
  */
+ //used to evaluate the assert that the expected array is correct
+ function arrayEquals( arrOne, arrTwo ){
+   var equal = true;
+   if( arrOne.length == arrTwo.length){
+     for( var i = 0; i<arrOne.length; i++){
+       if( arrOne[i] != arrTwo[i]){
+         equal = false;
+       }
+     }
+     return equal;
+   }else{
+     return false;
+   }
+ }
+
+function objectEquals( objOne, objTwo ){
+  var equal = true;
+  for( var prop in objOne ){
+    if( objOne[prop] != objTwo[prop]){
+      equal = false;
+    }
+  }
+  for( prop in objTwo ){
+    if( objTwo[prop] != objOne[prop]){
+      equal = false;
+    }
+  }
+  return equal;
+}
  // ---------------------
  // Define a function max() that takes two numbers as arguments and returns the largest of them. Use the if-then-else construct available in Javascript.
  // ---------------------
@@ -14,7 +43,9 @@
      }
  }
 
- 
+console.assert( max(1, 2) == 2, 'Max Function Failed');
+console.assert( max(100, -2000) == 100, 'Max Function Failed');
+console.log('max() cleared if no warnings');
  // ---------------------
  // Define a function maxOfThree() that takes three numbers as arguments and returns the largest of them.
  // ---------------------
@@ -30,7 +61,10 @@
      }
      return largest;
  }
-
+ console.assert( maxOfThree(1, 2, 3) == 3, 'maxofThree Function Failed');
+ console.assert( maxOfThree(10, 200, -300) == 200,  'maxOfThree Function Failed');
+ console.assert( maxOfThree(0.25, 0.5, 0.75) == 0.75,  'maxOfThree Function Failed');
+ console.log('maxOfThree() cleared if no warnings');
  // ---------------------
  // Write a function that takes a character (i.e. a string of length 1) and returns true if it is a vowel, false otherwise.
  // ---------------------
@@ -39,14 +73,17 @@
      "use strict";
      var pattern = /[aeiouAEIOU]/;
      var vowel = pattern.exec(char);
-     console.dir( vowel );
      if(vowel){
        return true;
      }else{
        return false;
      }
  }
-
+ console.assert( isVowel('a') === true, 'isVowel() Function Failed');
+ console.assert( isVowel('E') === true, 'isVowel() Function Failed');
+ console.assert( isVowel('g') === false, 'isVowel() Function Failed');
+ console.assert( isVowel('H') === false, 'isVowel() Function Failed');
+ console.log('isVowel() cleared if no warnings');
  // ---------------------
  // Write a function rovarspraket() that will translate a text into "rövarspråket". That is, double every consonant and place an occurrence of "o" in between. For example, translate("this is fun") should return the string "tothohisos isos fofunon".
  // ---------------------
@@ -72,7 +109,10 @@
      }
      return newPhrase;
  }
-
+ console.assert( rovarspraket('l') == 'lol', 'rovarspraket() Function Failed');
+ console.assert( rovarspraket('o') == 'o', 'rovarspraket() Function Failed');
+ console.assert( rovarspraket('lol hi') == 'lololol hohi', 'rovarspraket() Function Failed');
+ console.log('rovarspraket() cleared if no warnings');
  // ---------------------
  // Define a function sum() and a function multiply() that sums and multiplies (respectively) all the numbers in an array of numbers. For example, sum([1,2,3,4]) should return 10, and multiply([1,2,3,4]) should return 24.
  // ---------------------
@@ -94,6 +134,10 @@
      }
      return newProduct;
  }
+var testNumArray  = [1,2,3,4,5];
+console.assert( sum( testNumArray ) == 15, 'sum() Function Failed');
+console.assert( multiply( testNumArray ) == 120, 'multiply() Function Failed');
+console.log('sum() and multiply() cleared if no warnings');
 
  // ---------------------
  // Define a function reverse() that computes the reversal of a string. For example, reverse("jag testar") should return the string "ratset gaj".
@@ -107,7 +151,8 @@
      }
      return newStr;
  }
-
+ console.assert( reverse( 'abcdefghijklm' ) == 'mlkjihgfedcba', 'reverse() Function Failed');
+ console.log('reverse() cleared if no warnings');
  // ---------------------
  // Write a function findLongestWord() that takes an array of words and returns the length of the longest one.
  // ---------------------
@@ -122,7 +167,9 @@
      }
      return longestWord;
  }
-
+var testWordArray = ['this', 'is', 'a', 'superamazing', 'list', 'of', 'words'];
+console.assert( findLongestWord( testWordArray ) == 'superamazing', 'findLongestWord() Function Failed');
+console.log('findLongestWord() cleared if no warnings');
  // ---------------------
  // Write a function filterLongWords() that takes an array of words and an integer i and returns the array of words that are longer than i.
  // ---------------------
@@ -137,6 +184,10 @@
      }
      return longerWords;
  }
+
+ var filterWordsResult = ["superamazing", "words"];
+ console.assert( arrayEquals(filterLongWords( testWordArray, 4 ), filterWordsResult), 'filterLongWords() Function Failed');
+ console.log('filterLongWords() cleared if no warnings');
 
  // ---------------------
  // Write a function charFreq() that takes a string and builds a frequency listing of the characters contained in it. Represent the frequency listing as a Javascript object. Try it with something like charFreq("abbabcbdbabdbdbabababcbcbab").
@@ -154,7 +205,8 @@
      }
      return freqObj;
  }
-
-
-
+ var freqStr = 'abbabcbdbabdbdbabababcbcbab';
+ var freqObjDone = { a:7, b:14, c:3, d:3 };
+ console.assert( objectEquals( charFreq( freqStr ), freqObjDone), 'charFreq() Function Failed');
+ console.log('charFreq() cleared if no warnings');
 }());
